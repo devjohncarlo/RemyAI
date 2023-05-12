@@ -30,7 +30,7 @@ function messageAnimation(){
 }
 function messageAIAnimation(){
   gsap.set('.promptAI', {
-    opacity:  0
+    opacity:  1,
   });
 
  /*  gsap.to('.promptAI', {

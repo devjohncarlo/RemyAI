@@ -31,20 +31,23 @@ userInput.addEventListener("keypress", function(event) {
     }
   });
 
+
 function readPrompt() {
 
+  hideGreetings();
+  
+  //Variables 
   let userInput = document.getElementById("user-input").value;
   let userName = "John Doe:";
   let aiName = "Remy AI:";
+  //Creating HTML tags for User and AI conversation
   const tbl = document.createElement("table");
   const tblBody = document.createElement("tbody");
-
-  hideGreetings();
-
+  
   let userNameContainer = document.createElement("span");
   let userMsg = document.createElement("span");
   let userPrompt = document.createElement("div");
-  
+  //Putting Class for css styles
   userNameContainer.classList.add("username-cont");
   userMsg.classList.add("user-msg");
   userPrompt.classList.add("user-prompt");
@@ -53,8 +56,17 @@ function readPrompt() {
   userPrompt.append(userNameContainer, userMsg);
   userNameContainer.textContent = userName;
   userMsg.textContent = userInput;
-  
-  if(userInput.toLowerCase() !== ""){
+
+  gsap.fromTo(userPrompt, { 
+    opacity: 0, 
+    y: 100
+  }, { 
+    opacity: 1, 
+    y: 0, 
+    duration: .2
+  });
+
+  if(userInput.toLowerCase() !== "graph"){
     
     let aiNameContainer = document.createElement("span");
     let aiMsg = document.createElement("span");
@@ -68,6 +80,16 @@ function readPrompt() {
     aiPrompt.append(aiNameContainer, aiMsg);
     aiNameContainer.textContent = aiName;
     aiMsg.textContent = "Hello there! How can I assist you?";
+
+    gsap.fromTo(aiPrompt, { 
+      opacity: 0, 
+      y: 100
+    }, { 
+      opacity: 1, 
+      y: 0, 
+      duration: .4,
+      delay: .6
+    });
 
   }else if(userInput.toLowerCase() == "graph"){
     
@@ -110,14 +132,6 @@ function readPrompt() {
     tbl.setAttribute("border", "2");
 
   } 
-  return;
-
-
-
-
-
-  
-
 
 }
 
