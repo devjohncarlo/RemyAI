@@ -155,8 +155,9 @@ canvas{
 
 
 /* Prompt CSS */
-.promp-container{
-
+.prompt-container{
+  height: calc(100vh - 148px);
+  overflow: hidden;
 }
 
 .greetings{
@@ -205,8 +206,17 @@ td, th {
   border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;
+  background-color: white;
+  color: black
 }
 
-tr:nth-child(even) {
-  background-color: #dddddd;
+tr:first-child {
+  font-weight: bold;
+}
+
+.box {
+  width: 100px;
+  height: 100px;
+  background-color: lightblue;
+  margin: 10px;
 }

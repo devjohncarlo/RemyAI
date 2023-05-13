@@ -83,12 +83,8 @@
                 </div>
             </div>
             <div id="prompt-msg">
-                
             </div>
         </div>
-    </div>
-    
-
     <!-- <div class="login-area login-bg">
      
         <div  class="container">
@@ -121,7 +117,8 @@
         </div>
 
     </div> -->
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/TextPlugin.min.js"></script>
 <script src="assets/js/particles.js"></script>
 <script src="assets/js/app.js"></script>
 
@@ -141,7 +138,6 @@ stats.js -->
 <!-- others plugins -->
 <script src="assets/js/plugins.js"></script>
 <script src="assets/js/scripts.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
 <script src="assets/js/animation.js"></script>
 <!-- page container area end -->
 

@@ -12,10 +12,7 @@ function hideGreetings(){
     });
   }
 
-  function aiTypeWriting(){
-    gsap.to('')
-  }
-  
+
 function messageAnimation(){
   gsap.set('.prompt', {
     opacity:  1,
