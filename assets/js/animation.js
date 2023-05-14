@@ -25,6 +25,22 @@ function messageAnimation(){
   });
 
 }
+
+function messageAIAnimation(){
+  if (i < answerLength) {
+    answerEl = document.getElementById('promptAI');
+    answer.innterHTML += answer[i] + '|';
+
+    setTimeout(() => {
+      answerEl.innerHTML = answerEl.innerHTML.substring(0,txtContentEl.innerHTML.length-1);
+    }, 100);
+    
+    i++;
+    setTimeout(typing, speed);
+    }
+  
+}
+
 function messageAIAnimation(){
   gsap.set('.promptAI', {
     opacity:  1,

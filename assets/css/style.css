@@ -147,6 +147,7 @@ canvas{
 .dropdown-item{
   color: #000 !important;
   padding: 4px 15px !important;
+  font-size: 10px !important;
 }
 
 .dropdown-item img{
@@ -188,11 +189,15 @@ canvas{
   color: white;
 }
 .user-prompt .username-cont, .ai-prompt .ainame-cont{
-  font-size: 25px;
+  font-size: 15px;
 }
 
 .user-prompt .user-msg, .ai-prompt .ai-msg{
   font-size: 22px;
+}
+
+.user-prompt .user-msg, .username-cont {
+  font-weight: bold;
 }
 
 /* Table CSS */
