@@ -156,6 +156,10 @@ canvas{
 
 
 /* Prompt CSS */
+.form-contaier{
+  display: flex;
+  flex-direction: column;
+}
 .prompt-container{
   height: calc(100vh - 148px);
   overflow: hidden;
@@ -224,4 +228,41 @@ tr:first-child {
   height: 100px;
   background-color: lightblue;
   margin: 10px;
+}
+
+.prev-container{
+  display: none;
+  opacity: 0;
+  width: 75%;
+  color: white;
+  text-decoration: none;
+  border-radius: 0 0 10px 10px;
+  height: 30px;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.prev-container, .prev-text, .prev-img{
+  display: none;
+  opacity: 0;
+}
+.prev-container img{
+  cursor: pointer;
+}
+.prev-container:hover{
+  opacity: 1;
+  background-color: #313338;
+  text-decoration: none;
+  color: white;
+  cursor: pointer;
+}
+.prev-container:hover + .prev-text, .prev-img{
+  display: block;
+  opacity: 1;
+}
+
+.prev-container:hover + .prev-text, .prev-text{
+  display: block;
+  opacity: 1;
 }

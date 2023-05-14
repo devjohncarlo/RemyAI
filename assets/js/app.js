@@ -152,15 +152,18 @@ function readPrompt() {
   let removeAiMsg = document.querySelector(`.ai-prompt:nth-child(${allMsg - 6})`);
 
   if(allMsg == 6){
-
+    
     gsap.to(sixthLine, {opacity: .25});
     gsap.to(fifthLine, {opacity: .5});
     
 
-  }else if(allMsg >= 7){
+  }else if(allMsg >= 8){
+    
     gsap.to(sixthLine, {opacity: .25, delay: 1.5});
     gsap.to(fifthLine, {opacity: .5, delay: 1.5});
-    
+    const prevContainer = document.querySelector('.prev-container');
+    gsap.to(".prev-container", { display: "flex"});
+    prevContainer.classList.add("prev-container");
     gsap.to(removeUserMsg, {opacity: 0, display: "none", duration: 1});
     gsap.to(removeAiMsg, {opacity: 0,display: "none", duration: 1});
   }

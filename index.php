@@ -72,15 +72,20 @@
 
         <div class="prompt-container">
             <div class="greetings" id="greetings" >
-                <h1>Good Morning, John Doe. How may I assist you today?asassdsdd</h1>
+                <h1>Good Morning, John Doe. How may I assist you today?</h1>
             </div>
-            <div class="form-container d-flex">
-                <div class="input-group mb-3" id="user-prompt" >
+            <div class="form-container d-flex mb-3">
+                <div class="input-group" id="user-prompt" >
                     <input type="text" id="user-input" class="form-control" placeholder="Lorem ipsum dolor sit amet" required aria-label="Recipient's username" aria-describedby="basic-addon2">
                     <div class="input-group-append">
                         <button onclick="readPrompt()" id="submit" disabled class="btn btn-outline-secondary" type="button"><img src="images/sent.png" alt="" height="22" width="22"></button>
                     </div>
                 </div>
+                <div class="prev-container">
+                    <span class="prev-text" href="">See Previous Messages</span>
+                    <img class="prev-img" src="images/arrow-up.png" alt="" height="15" width="15">
+                </div>
+               
             </div>
             <div id="prompt-msg">
             </div>
