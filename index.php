@@ -81,13 +81,19 @@
                         <button onclick="readPrompt()" id="submit" disabled class="btn btn-outline-secondary" type="button"><img src="images/sent.png" alt="" height="22" width="22"></button>
                     </div>
                 </div>
-                <div class="prev-container">
+                <div class="prev-container" onclick="viewPrevious()">
                     <span class="prev-text" href="">See Previous Messages</span>
                     <img class="prev-img" src="images/arrow-up.png" alt="" height="15" width="15">
                 </div>
                
             </div>
             <div id="prompt-msg">
+            </div>
+            <div class="sub-container">
+                <div class="next-container" onclick="viewLatest()">
+                        <span class="next-text" href="">See Latest Messages</span>
+                        <img class="next-img" src="images/arrow-down.png" alt="" height="15" width="15">
+                </div>
             </div>
         </div>
     <!-- <div class="login-area login-bg">

@@ -223,14 +223,13 @@ tr:first-child {
   font-weight: bold;
 }
 
-.box {
-  width: 100px;
-  height: 100px;
-  background-color: lightblue;
-  margin: 10px;
+.sub-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.prev-container{
+.prev-container, .next-container{
   display: none;
   opacity: 0;
   width: 75%;
@@ -247,16 +246,30 @@ tr:first-child {
   display: none;
   opacity: 0;
 }
-.prev-container img{
+.next-container, .next-text, .next-img{
+  display: none;
+  opacity: 0;
+}
+.prev-container img, .next-container img{
   cursor: pointer;
 }
-.prev-container:hover{
+.prev-container:hover, .next-container:hover{
   opacity: 1;
   background-color: #313338;
   text-decoration: none;
   color: white;
   cursor: pointer;
 }
+.next-container:hover + .next-text, .next-img{
+  display: block;
+  opacity: 1;
+}
+
+.next-container:hover + .next-text, .next-text{
+  display: block;
+  opacity: 1;
+}
+
 .prev-container:hover + .prev-text, .prev-img{
   display: block;
   opacity: 1;
@@ -265,4 +278,13 @@ tr:first-child {
 .prev-container:hover + .prev-text, .prev-text{
   display: block;
   opacity: 1;
+}
+
+
+
+.hidden{
+  display: none;
+}
+.fade{
+  opacity: .5 !important;
 }
