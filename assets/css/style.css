@@ -181,7 +181,7 @@ canvas{
 #prompt-msg{
   width: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row-reverse !important;
   justify-content: flex-start;
   align-items: center;
 }
@@ -189,20 +189,21 @@ canvas{
 .user-prompt, .ai-prompt{
   width: 75%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row-reverse;
   color: white;
+  padding-top: 10px !important;
 }
 .user-prompt .username-cont, .ai-prompt .ainame-cont{
-  font-size: 15px;
+  font-size: 50px;
 }
 
 .user-prompt .user-msg, .ai-prompt .ai-msg{
-  font-size: 22px;
+  font-size: 50px;
 }
 
-.user-prompt .user-msg, .username-cont {
+/* .user-prompt .user-msg, .username-cont {
   font-weight: bold;
-}
+} */
 
 /* Table CSS */
 
