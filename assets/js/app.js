@@ -1,4 +1,4 @@
-
+/* Particle JS */
 var myConfig = [
 	'particlesjs-config.json'
 ];
@@ -8,11 +8,15 @@ var randomConfig = myConfig[Math.floor(Math.random()*myConfig.length)]
 particlesJS.load('particles-js', randomConfig, function() {
   console.log('particles.js loaded - callback');
 });
+/*End of Particle JS */
+
 
 
 const DivContainer = document.getElementById("prompt-msg");
 const userInput = document.getElementById("user-input");
 const buttonSubmit = document.getElementById("submit");
+const form = document.getElementById('myForm');
+const formFieldsContainer = document.getElementById('formFieldsContainer');
 
 //A small validation for input as the button is remain disabled if input is blank
 userInput.addEventListener("input", function() {
@@ -33,18 +37,16 @@ userInput.addEventListener("keypress", function(event) {
 
 
 function readPrompt() {
-
   hideGreetings();
-  
   //Variables 
   let userInput = document.getElementById("user-input").value;
   let userName = "John Doe:";
-  let aiName = "Remy AI:";
-
+  let aiName = "Remy:";
+  let userInputDisabled = document.getElementById("user-input");
+  let buttonDisabled = document.getElementById("submit");
   //Creating HTML tags for User and AI conversation
   const tbl = document.createElement("table");
   const tblBody = document.createElement("tbody");
-  
   let userNameContainer = document.createElement("span");
   let userMsg = document.createElement("span");
   let userPrompt = document.createElement("div");
@@ -57,7 +59,8 @@ function readPrompt() {
   userPrompt.append(userNameContainer, userMsg);
   userNameContainer.textContent = userName;
   userMsg.textContent = userInput;
-
+  
+  
   gsap.fromTo(userPrompt, { 
     opacity: 0, 
     y: 100
@@ -67,21 +70,65 @@ function readPrompt() {
     duration: .2
   });
 
-  if(userInput.toLowerCase() !== "graph"){
+  //Type Writing JS
+ 
+  if(userInput.toLowerCase() !== "graph" && userInput !== "" && userInput !== "onboard new property"){
     
+    removeClasses();
+    let allMsg = DivContainer.getElementsByTagName('div').length;
     let aiNameContainer = document.createElement("span");
     let aiMsg = document.createElement("span");
     let aiPrompt = document.createElement("div");
+    let aiCursor = document.createElement("span");
+    aiCursor.setAttribute('id', 'cursor');
+    aiCursor.textContent = "|";
 
     aiNameContainer.classList.add("ainame-cont" );
     aiMsg.classList.add("ai-msg" );
+    aiMsg.setAttribute('id', 'ai-msg');
     aiPrompt.classList.add("ai-prompt");
 
     DivContainer.append(aiPrompt);
     aiPrompt.append(aiNameContainer, aiMsg);
     aiNameContainer.textContent = aiName;
-    aiMsg.textContent = "Hello there! How can I assist you?";
+
+    function enableInputField() {
+      userInputDisabled.disabled = false;
+      buttonDisabled.disabled = false;
+    }
+
+    if(allMsg > 0 && allMsg <= 2){
+      aiPrompt.append(aiCursor);  
+      }
+
+    let text = document.querySelector("#ai-msg");
+    let cursor = document.querySelector("#cursor");
+    gsap.fromTo(cursor, {autoAlpha: 0, x: 2}, {autoAlpha: 1, duration: 0.5, repeat: -1, ease: SteppedEase.config(1)});
+    userInputDisabled.disabled = true;
+    buttonDisabled.disabled = true;
+    let tween = gsap.to("#ai-msg", {
+      text: {
+        value: "Hello there! How can I assist you?"
+      }, 
+      duration: 3,
+      delay: .5, 
+      ease: "none",
+      onComplete: enableInputField,
+      onUpdate: () => text.appendChild(cursor),
+      
+    });
+
+    
+   
+    /* document.querySelector('#restart').onclick = () => tween.restart() */
+    /* document.querySelector('#pause').onclick = () => tween.pause()
+    document.querySelector('#resume').onclick = () => tween.resume() */
+    /*  document.querySelector('#reverse').onclick = () => tween.reverse() */
   
+  
+  
+    //end of typewriting
+
     gsap.fromTo(aiPrompt, { 
       opacity: 0, 
       y: 100
@@ -91,27 +138,16 @@ function readPrompt() {
       duration: .4,
       delay: .6
     });
-
+  
   }else if(userInput.toLowerCase() == "graph"){
-    
-    // creates a <table> element and a <tbody> element
-
-    // creating all cells
     for (let i = 0; i < 7; i++) {
-      // creates a table row
       const row = document.createElement("tr");
-
       for (let j = 0; j < 7; j++) {
-        // Create a <td> element and a text node, make the text
-        // node the contents of the <td>, and put the <td> at
-        // the end of the table row
         const cell = document.createElement("td");
         const cellText = document.createTextNode(`cell in row ${i}, column ${j}`);
         cell.appendChild(cellText);
         row.appendChild(cell);
       }
-
-      // add the row to the end of the table body
       tblBody.appendChild(row);
     }
     tbl.appendChild(tblBody);
@@ -128,8 +164,6 @@ function readPrompt() {
     aiPrompt.append(aiNameContainer, aiMsg, tbl);
     aiNameContainer.textContent = aiName;
     aiMsg.textContent = "Here are all your current properties:";
-    
-    // sets the border attribute of tbl to '2'
     tbl.setAttribute("border", "2");
 
     gsap.fromTo(aiPrompt, { 
@@ -141,190 +175,107 @@ function readPrompt() {
       duration: .4,
       delay: .6
     });
-
-  }
- 
-  
-  let allMsg = DivContainer.getElementsByTagName('div').length;
-
-
-  /* let sixthLine = document.querySelector(`.user-prompt:nth-child(${allMsg - 5})`);
-  let fifthLine = document.querySelector(`.ai-prompt:nth-child(${allMsg - 4})`);
-  let removeUserMsg = document.querySelector(`.user-prompt:nth-child(${allMsg - 7})`);
-  let removeAiMsg = document.querySelector(`.ai-prompt:nth-child(${allMsg - 6})`);
- */
-  if(allMsg == 6){
-
-    removeClasses();
-    setClasses();
-    /* gsap.to(sixthLine, {opacity: .25});
-    gsap.to(fifthLine, {opacity: .5}); */
     
+  }else if(userInput.toLowerCase() == "onboard new property") {
+    const aiNameContainer = document.createElement("span");
+    const aiMsg = document.createElement("span");
+    const aiPrompt = document.createElement("div");
+    const fieldContainer = document.createElement('div');
+    const textField = document.createElement('input');
+    const emailField = document.createElement('input');
+    const numberField = document.createElement('input');
+    const buttonForms = document.createElement('button');
+    
+    textField.type = 'text';
+    textField.placeholder = 'Enter text';
+    emailField.type = 'email';
+    emailField.placeholder = 'Enter email';
+    numberField.type = 'number';
+    numberField.placeholder = 'Enter number';
+    buttonForms.type = "submit";
+    buttonForms.textContent = "Submit"
 
-  }else if(allMsg >= 8 && allMsg < 10){
+    aiNameContainer.classList.add("ainame-cont" );
+    aiMsg.classList.add("ai-msg");
+    aiPrompt.classList.add("ai-prompt");
+    fieldContainer.classList.add("form-container", "inputForms-container");
+    textField.classList.add("form-control");
+    emailField.classList.add("form-control");
+    numberField.classList.add("form-control");
+    buttonForms.classList.add("btn", "btn-primary");
+
+    DivContainer.append(aiPrompt);
+    fieldContainer.append(textField,emailField,numberField, buttonForms);
+    aiPrompt.append(aiNameContainer, aiMsg, fieldContainer);
+    aiNameContainer.textContent = aiName;
+    aiMsg.textContent = "Here are all your current properties:";
+    
+    gsap.fromTo(aiPrompt, { 
+      opacity: 0, 
+      y: 100
+    }, { 
+      opacity: 1, 
+      y: 0, 
+      duration: .4,
+      delay: .6
+    });
+   
+
+  // Append the input fields to the field container
+  
+  
+  }
+
+  repositionWindow = document.getElementById("prompt-msg");
+  repositionWindow.scrollTop = repositionWindow.scrollHeight;
+  clearInput = document.getElementById("user-input");
+  clearInput.value = "";
+  clearInput.setAttribute("placeholder", "");
+  clearInput.blur();
+
+  let allMsg = DivContainer.getElementsByTagName('div').length;
+  if (clearInput === ""){
+    buttonSubmit.setAttribute("disabled", true);
+  }
+  if(allMsg == 6 ){
     removeClasses();
     setClasses();
-    const prevContainer = document.querySelector('.prev-container');
-    gsap.to(".prev-container", { display: "flex"});
-    prevContainer.classList.add("prev-container");
-   /*  gsap.to(sixthLine, {opacity: .25, delay: 1.5});
-    gsap.to(fifthLine, {opacity: .5, delay: 1.5});
-    gsap.to(removeUserMsg, {opacity: 0, display: "none", duration: 1});
-    gsap.to(removeAiMsg, {opacity: 0,display: "none", duration: 1}); */
+  }else if(allMsg >= 8 && allMsg < 10){
+    let prevScroll = document.querySelector('#prev');
+    let latestScroll = document.querySelector('#latest');
+    prevScroll.setAttribute("style", "display: flex !important;")
+    latestScroll.setAttribute("style", "display: flex !important;")
+    removeClasses();
+    setClasses();
   }
   else if(allMsg >= 10){
-    reverseRemoveClasses();
+    removeClasses();
     setClasses();
-  }
-  prevCount = 0;
-}
-
-function viewPrevious(){
-  removeClasses();
-  prevClasses();
- 
-}
-function viewLatest(){
-  removeClasses();
-  nextClasses();
- 
-}
-function removeClasses(){
-
-  let allLine = document.querySelectorAll('.ai-prompt, .user-prompt');
-  allLine.forEach((element) => {
-    element.classList.remove("main", "fade");
-  });
-}
-function reverseRemoveClasses(){
-
-  let allLine = document.querySelectorAll('.ai-prompt, .user-prompt');
-  allLine.forEach((element) => {
-    element.classList.remove("main", "fade", "hidden");
-  });
-}
-var prevCount = 0;
-
-function prevClasses(){
-
-  var promptCount = DivContainer.getElementsByTagName('div').length;
-  var promptCount = promptCount + prevCount;
-  console.log(promptCount + "test");
-  let latestLine = document.querySelectorAll(`.ai-prompt:nth-child(${promptCount}), .user-prompt:nth-child(${promptCount - 1})`);
-  let prevLine = document.querySelectorAll(`.ai-prompt:nth-child(${promptCount - 6}), .user-prompt:nth-child(${promptCount - 7})`);
-  let secondLine = document.querySelectorAll(`.ai-prompt:nth-child(${promptCount - 2}), .user-prompt:nth-child(${promptCount - 3})`);
-
-  console.log(prevCount);
-
-
-   secondLine.forEach((element) => {
-   
-    element.classList.add('fade');
-  });
-
-  latestLine.forEach((element) => {
-    console.log(element);
-    element.classList.add('hidden');
-  });
-  
-  prevLine.forEach((element) => {
-    element.classList.add('main');
-    element.classList.remove('hidden', 'fade');
-   
-  });
-
-  if(promptCount <= 8){
-    const prevContainer = document.querySelector('.prev-container');
-    const nextContainer = document.querySelector('.next-container');
-    gsap.to(".prev-container", { display: "none"});
-    gsap.to(".next-container", { display: "flex"});
-    prevContainer.classList.add("prev-container");
-    prevContainer.classList.add("next-container");
   }else{
-    prevCount = prevCount - 2;
-    console.log(prevCount);
-  }
-}
-function nextClasses(){
-
-  var promptCount = DivContainer.getElementsByTagName('div').length;
-  var promptCount = promptCount + prevCount;
-  console.log(promptCount + "test");
-  let latestLine = document.querySelectorAll(`.ai-prompt:nth-child(${promptCount}), .user-prompt:nth-child(${promptCount - 1})`);
-  let firstLine = document.querySelectorAll(`.ai-prompt:nth-child(${promptCount - 6}), .user-prompt:nth-child(${promptCount - 7})`);
-  let secondLine = document.querySelectorAll(`.ai-prompt:nth-child(${promptCount - 4}), .user-prompt:nth-child(${promptCount - 5})`);
-  let hiddenLine = document.querySelectorAll(`.ai-prompt:nth-child(n+2):nth-child(-n + ${ promptCount-6}), .user-prompt:nth-child(n+1):nth-child(-n + ${ promptCount-7})`);
- 
-  console.log(promptCount);
-
-  secondLine.forEach((element) => {
-   
-    element.classList.add('fade');
-  });
-
-  firstLine.forEach((element) => {
-   
     
-    element.classList.add('hidden');
-  });
-
-  latestLine.forEach((element) => {
-   
-    element.classList.add('main');
-    element.classList.remove('hidden', 'fade');
-  });
-
-  if(promptCount >= 8){
-    hiddenLine.forEach((element) => {
-     /*  console.log(element); */
-      element.classList.add('hidden');
-    });
   }
+}
 
-  if(promptCount == prevCount){
-    const prevContainer = document.querySelector('.prev-container');
-    const nextContainer = document.querySelector('.next-container');
-    gsap.to(".prev-container", { display: "flex"});
-    gsap.to(".next-container", { display: "none"});
-    prevContainer.classList.add("prev-container");
-    prevContainer.classList.add("next-container");
-  }else{
-    prevCount = prevCount + 2;
-    console.log(prevCount);
-  }
+
+
+function removeClasses(){
+    let allLine = document.querySelectorAll('.ai-prompt, .user-prompt, .ai-msg');
+  allLine.forEach((element) => {
+    element.classList.remove("fade", "lightFade");
+    element.removeAttribute("id");
+  });
 }
 
 function setClasses(){
   let promptCount = DivContainer.getElementsByTagName('div').length;
-  let latestLine = document.querySelectorAll(`.ai-prompt:last-child, .user-prompt:nth-child(${promptCount - 1})`);
-  let firstLine = document.querySelectorAll(`.ai-prompt:nth-child(${promptCount - 6}), .user-prompt:nth-child(${promptCount - 7})`);
   let secondLine = document.querySelectorAll(`.ai-prompt:nth-child(${promptCount - 4}), .user-prompt:nth-child(${promptCount - 5})`);
-  let hiddenLine = document.querySelectorAll(`.ai-prompt:nth-child(n+2):nth-child(-n + ${ promptCount-6}), .user-prompt:nth-child(n+1):nth-child(-n + ${ promptCount-7})`);
- 
-  console.log(promptCount);
 
   secondLine.forEach((element) => {
    
     element.classList.add('fade');
   });
 
-  firstLine.forEach((element) => {
-   
-    
-    element.classList.add('hidden');
-  });
-
-  latestLine.forEach((element) => {
-   
-    element.classList.add('main');
-  });
-
-  if(promptCount >= 8){
-    hiddenLine.forEach((element) => {
-     /*  console.log(element); */
-      element.classList.add('hidden');
-    });
-  }
 }
+
 
 
