@@ -83,13 +83,13 @@
                 </div>
             </div>
             <div class="prompt-sub" id="prompt-sub">
-                <div class="prev-container" id="prev" onclick="viewPrevious()">
+                <div class="prev-container" id="prev" >
                         <span class="prev-text" href="">See Previous Messages</span>
                         <img class="prev-img" src="images/arrow-up.png" alt="" height="15" width="15">
                 </div>
                 <div id="prompt-msg">
                 </div>
-                <div class="next-container" id="latest" onclick="viewLatest()">
+                <div class="next-container" id="latest" >
                         <span class="next-text" href="">See Latest Messages</span>
                         <img class="next-img" src="images/arrow-down.png" alt="" height="15" width="15">
                 </div>

@@ -1,0 +1,55 @@
+/* Mobile View */
+@media (max-width: 600px) {
+  .greetings {
+    padding: 25px 0;
+  }
+  .greetings h1{ 
+    font-size: 25px;
+  }
+
+  .form-container .input-group{
+    width: 90% !important;
+  }
+  .responsive thead {
+    visibility: hidden;
+    height: 0;
+    position: absolute;
+  }
+  
+  .responsive tr {
+    display: block;
+    margin-bottom: .625em;
+  }
+  
+  .responsive td {
+    border: 1px solid;
+    border-bottom: none;
+    display: block;
+    font-size: .8em;
+    text-align: right;
+  }
+  
+  .responsive td::before {
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  .responsive td:last-child {
+    border-bottom: 1px solid;
+  }
+
+  #prompt-msg {
+    cursor: grab;
+    overflow: auto;
+  }
+  
+  .prompt-sub{
+    margin: 20px;
+  }
+  
+  .user-prompt, .ai-prompt{
+    margin: 5px 0;
+  }
+}

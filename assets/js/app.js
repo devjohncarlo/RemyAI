@@ -60,7 +60,13 @@ function readPrompt() {
   userNameContainer.textContent = userName;
   userMsg.textContent = userInput;
   
-  
+  function enableInputField() {
+    userInputDisabled.disabled = false;
+    buttonDisabled.disabled = false;
+    repositionWindow = document.getElementById("prompt-msg");
+    repositionWindow.scrollTop = repositionWindow.scrollHeight + 600;
+  }
+
   gsap.fromTo(userPrompt, { 
     opacity: 0, 
     y: 100
@@ -70,9 +76,8 @@ function readPrompt() {
     duration: .2
   });
 
-  //Type Writing JS
  
-  if(userInput.toLowerCase() !== "graph" && userInput !== "" && userInput !== "onboard new property"){
+  if(userInput.toLowerCase() !== "show my property" && userInput !== "" && userInput !== "onboard new property"){
     
     removeClasses();
     let allMsg = DivContainer.getElementsByTagName('div').length;
@@ -86,17 +91,12 @@ function readPrompt() {
     aiNameContainer.classList.add("ainame-cont" );
     aiMsg.classList.add("ai-msg" );
     aiMsg.setAttribute('id', 'ai-msg');
-    aiPrompt.classList.add("ai-prompt");
-
+    aiPrompt.classList.add("ai-prompt", "prompt-200");
     DivContainer.append(aiPrompt);
     aiPrompt.append(aiNameContainer, aiMsg);
     aiNameContainer.textContent = aiName;
 
-    function enableInputField() {
-      userInputDisabled.disabled = false;
-      buttonDisabled.disabled = false;
-    }
-
+  
     if(allMsg > 0 && allMsg <= 2){
       aiPrompt.append(aiCursor);  
       }
@@ -118,16 +118,10 @@ function readPrompt() {
       
     });
 
-    
-   
     /* document.querySelector('#restart').onclick = () => tween.restart() */
     /* document.querySelector('#pause').onclick = () => tween.pause()
     document.querySelector('#resume').onclick = () => tween.resume() */
     /*  document.querySelector('#reverse').onclick = () => tween.reverse() */
-  
-  
-  
-    //end of typewriting
 
     gsap.fromTo(aiPrompt, { 
       opacity: 0, 
@@ -139,33 +133,144 @@ function readPrompt() {
       delay: .6
     });
   
-  }else if(userInput.toLowerCase() == "graph"){
-    for (let i = 0; i < 7; i++) {
-      const row = document.createElement("tr");
-      for (let j = 0; j < 7; j++) {
-        const cell = document.createElement("td");
-        const cellText = document.createTextNode(`cell in row ${i}, column ${j}`);
-        cell.appendChild(cellText);
-        row.appendChild(cell);
+  }else if(userInput.toLowerCase() == "show my property"){
+    const movies = [
+      {
+        rank: 1,
+        title: 'The Shawshank Redemption',
+        genre: 'Drama',
+        year: 1994,
+        director: 'Frank Darabont'
+      },
+      {
+        rank: 2,
+        title: 'The Godfather',
+        genre: 'Crime, Drama',
+        year: 1972,
+        director: 'Francis Ford Coppola'
+      },
+      {
+        rank: 3,
+        title: 'The Dark Knight',
+        genre: 'Action, Crime, Drama, Thriller',
+        year: 2008,
+        director: 'Christopher Nolan'
+      },
+      {
+        rank: 4,
+        title: 'The Godfather: Part II',
+        genre: 'Crime, Drama',
+        year: 1974,
+        director: 'Francis Ford Coppola'
+      },
+      {
+        rank: 5,
+        title: '12 Angry Men',
+        genre: 'Crime, Drama',
+        year: 1957,
+        director: 'Sidney Lumet'
       }
-      tblBody.appendChild(row);
-    }
-    tbl.appendChild(tblBody);
+    ];
+    
+    const table = document.createElement('table');
+    table.className = 'table responsive';
+    
+    const thead = document.createElement('thead');
+    const headerRow = document.createElement('tr');
+    const headers = ['Rank', 'Title', 'Genre', 'Year', 'Director'];
+    
+    headers.forEach(headerText => {
+      const headerCell = document.createElement('td');
+      headerCell.textContent = headerText;
+      headerRow.appendChild(headerCell);
+    });
+    
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+  
+    const tbody = document.createElement('tbody');
+    
+    movies.forEach(movie => {
+      const row = document.createElement('tr');
+    
+      const rankCell = document.createElement('td');
+      rankCell.setAttribute('data-label', 'Rank');
+      rankCell.textContent = `${movie.rank}.`;
+      row.appendChild(rankCell);
+    
+      const titleCell = document.createElement('td');
+      titleCell.setAttribute('data-label', 'Title');
+      titleCell.textContent = movie.title;
+      row.appendChild(titleCell);
+    
+      const genreCell = document.createElement('td');
+      genreCell.setAttribute('data-label', 'Genre');
+      genreCell.textContent = movie.genre;
+      row.appendChild(genreCell);
+    
+      const yearCell = document.createElement('td');
+      yearCell.setAttribute('data-label', 'Year');
+      yearCell.textContent = movie.year;
+      row.appendChild(yearCell);
+    
+      const directorCell = document.createElement('td');
+      directorCell.setAttribute('data-label', 'Director');
+      directorCell.textContent = movie.director;
+      row.appendChild(directorCell);
+    
+      tbody.appendChild(row);
+    });
+    
+    table.appendChild(tbody);
 
+    removeClasses();
+    let allMsg = DivContainer.getElementsByTagName('div').length;
     let aiNameContainer = document.createElement("span");
     let aiMsg = document.createElement("span");
     let aiPrompt = document.createElement("div");
+    let aiCursor = document.createElement("span");
+    aiCursor.setAttribute('id', 'cursor');
+    aiCursor.textContent = "|";
 
     aiNameContainer.classList.add("ainame-cont" );
-    aiMsg.classList.add("ai-msg");
-    aiPrompt.classList.add("ai-prompt");
-    
-    DivContainer.append(aiPrompt);
-    aiPrompt.append(aiNameContainer, aiMsg, tbl);
-    aiNameContainer.textContent = aiName;
-    aiMsg.textContent = "Here are all your current properties:";
+    aiMsg.classList.add("ai-msg" );
+    aiMsg.setAttribute('id', 'ai-msg');
+    aiPrompt.classList.add("ai-prompt", "table-600");
+    tbl.classList.add('tbl-container');
     tbl.setAttribute("border", "2");
+    DivContainer.append(aiPrompt);
+    aiPrompt.append(aiNameContainer, aiMsg, table);
+    aiNameContainer.textContent = aiName;
 
+    function generateTable(){
+      enableInputField();
+      gsap.to(tbl,{
+        opacity: 1,
+        delay: 0.5
+      });
+    }
+  
+    if(allMsg > 0 && allMsg <= 2){
+      aiPrompt.append(aiCursor);  
+      }
+
+    let text = document.querySelector("#ai-msg");
+    let cursor = document.querySelector("#cursor");
+    gsap.fromTo(cursor, {autoAlpha: 0, x: 2}, {autoAlpha: 1, duration: 0.5, repeat: -1, ease: SteppedEase.config(1)});
+    userInputDisabled.disabled = true;
+    buttonDisabled.disabled = true;
+    let tween = gsap.to("#ai-msg", {
+      text: {
+        value: "Hi, Here's a table that shows your property:"
+      }, 
+      duration: 3,
+      delay: .5, 
+      ease: "none",
+      onComplete: generateTable,
+      onUpdate: () => text.appendChild(cursor),
+      
+    });
+    tableAndFormsCounter ++;
     gsap.fromTo(aiPrompt, { 
       opacity: 0, 
       y: 100
@@ -177,6 +282,9 @@ function readPrompt() {
     });
     
   }else if(userInput.toLowerCase() == "onboard new property") {
+    removeClasses();
+    let allMsg = DivContainer.getElementsByTagName('div').length;
+    let aiCursor = document.createElement("span");
     const aiNameContainer = document.createElement("span");
     const aiMsg = document.createElement("span");
     const aiPrompt = document.createElement("div");
@@ -194,10 +302,12 @@ function readPrompt() {
     numberField.placeholder = 'Enter number';
     buttonForms.type = "submit";
     buttonForms.textContent = "Submit"
+    aiCursor.setAttribute('id', 'cursor');
+    aiCursor.textContent = "|";
 
     aiNameContainer.classList.add("ainame-cont" );
     aiMsg.classList.add("ai-msg");
-    aiPrompt.classList.add("ai-prompt");
+    aiPrompt.classList.add("ai-prompt", "form-400");
     fieldContainer.classList.add("form-container", "inputForms-container");
     textField.classList.add("form-control");
     emailField.classList.add("form-control");
@@ -206,10 +316,57 @@ function readPrompt() {
 
     DivContainer.append(aiPrompt);
     fieldContainer.append(textField,emailField,numberField, buttonForms);
+    aiPrompt.append(aiNameContainer, aiMsg);
+    aiNameContainer.textContent = aiName;
+    
+
+    aiNameContainer.classList.add("ainame-cont" );
+    aiMsg.classList.add("ai-msg" );
+    aiMsg.setAttribute('id', 'ai-msg');
+    aiPrompt.classList.add("ai-prompt");
+
+    DivContainer.append(aiPrompt);
     aiPrompt.append(aiNameContainer, aiMsg, fieldContainer);
     aiNameContainer.textContent = aiName;
-    aiMsg.textContent = "Here are all your current properties:";
     
+    function generateForms(){
+      enableInputField();
+      gsap.to(fieldContainer,{
+        opacity: 1,
+        delay: 0.5
+      });
+    }
+  
+    if(allMsg > 0 && allMsg <= 2){
+      aiPrompt.append(aiCursor);  
+      }
+
+    let text = document.querySelector("#ai-msg");
+    let cursor = document.querySelector("#cursor");
+    gsap.fromTo(cursor, {autoAlpha: 0, x: 2}, {autoAlpha: 1, duration: 0.5, repeat: -1, ease: SteppedEase.config(1)});
+    userInputDisabled.disabled = true;
+    buttonDisabled.disabled = true;
+    let tween = gsap.to("#ai-msg", {
+      text: {
+        value: "Hello! Here's a form to onboard your new property"
+      }, 
+      duration: 3,
+      delay: .5, 
+      ease: "none",
+      onComplete: generateForms,
+      onUpdate: () => text.appendChild(cursor),
+      
+    });
+    tableAndFormsCounter ++;
+    gsap.fromTo(aiPrompt, { 
+      opacity: 0, 
+      y: 100
+    }, { 
+      opacity: 1, 
+      y: 0, 
+      duration: .4,
+      delay: .6
+    });
     gsap.fromTo(aiPrompt, { 
       opacity: 0, 
       y: 100
@@ -220,12 +377,12 @@ function readPrompt() {
       delay: .6
     });
    
-
+    
   // Append the input fields to the field container
   
   
   }
-
+  var tableAndFormsCounter = 0;
   repositionWindow = document.getElementById("prompt-msg");
   repositionWindow.scrollTop = repositionWindow.scrollHeight;
   clearInput = document.getElementById("user-input");
@@ -237,14 +394,15 @@ function readPrompt() {
   if (clearInput === ""){
     buttonSubmit.setAttribute("disabled", true);
   }
+  
+  if(isForms.length == 1 && allMsg > 0 || isForms.length > 1){
+    displayScroll()
+  }
   if(allMsg == 6 ){
     removeClasses();
     setClasses();
   }else if(allMsg >= 8 && allMsg < 10){
-    let prevScroll = document.querySelector('#prev');
-    let latestScroll = document.querySelector('#latest');
-    prevScroll.setAttribute("style", "display: flex !important;")
-    latestScroll.setAttribute("style", "display: flex !important;")
+    displayScroll()
     removeClasses();
     setClasses();
   }
@@ -256,7 +414,12 @@ function readPrompt() {
   }
 }
 
-
+function displayScroll() {
+    let prevScroll = document.querySelector('#prev');
+    let latestScroll = document.querySelector('#latest');
+    prevScroll.setAttribute("style", "display: flex !important;")
+    latestScroll.setAttribute("style", "display: flex !important;")
+}
 
 function removeClasses(){
     let allLine = document.querySelectorAll('.ai-prompt, .user-prompt, .ai-msg');
