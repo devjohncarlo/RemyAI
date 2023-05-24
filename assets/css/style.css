@@ -6,6 +6,11 @@
     -webkit-box-sizing: border-box; 
      box-sizing: border-box; 
 }
+div{
+  -moz-box-sizing: border-box; 
+    -webkit-box-sizing: border-box; 
+     box-sizing: border-box; 
+}
 
 html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,abbr,address,cite,code,del,dfn,em,img,ins,kbd,q,samp,small,strong,sub,sup,var,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}
 body{line-height:1}
@@ -204,7 +209,6 @@ width: 100%;
   display: flex;
   flex-direction: column;
   color: white;
-  height: fit-content !important;
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
@@ -213,7 +217,10 @@ width: 100%;
   border-radius: 10px;
   margin: 5.5px 15px;
   padding: 6px 15px 6px 15px;
-  /* margin: 0 20px; */
+}
+.user-prompt{
+  max-height: 100px;
+  height: 100px !important;
 }
 .user-prompt .username-cont, .ai-prompt .ainame-cont{
   font-size: 25px;
@@ -349,4 +356,8 @@ tr:first-child {
 .table td {
   padding: 7px 10px;
   border: 1px solid;
+}
+
+.table-600{
+height: 600px !important;
 }

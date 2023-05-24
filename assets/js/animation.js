@@ -12,16 +12,17 @@ function hideGreetings(){
     });
   }
 
-  var amount = 0;
-  var intervalId;
+ 
   var isForms = document.querySelectorAll(".form-prompt, .table-prompt");
   var latestCounter = 0;
   var prevCounter = 0;
+  var amount = 0;
+  var intervalId;
 
   function scroll() {
     var container = document.getElementById('prompt-msg');
     var step = 10;
-    var duration = 50;
+    var duration = 50 ;
 
     intervalId = setInterval(function() {
       var scrollHeight = container.scrollHeight;
@@ -29,83 +30,159 @@ function hideGreetings(){
 
       if (amount > 0) {
         scrollTop += step;
-      } else if (amount < 0) {
+      } else if (amount < 0 || container.scrollTop != 0) {
         scrollTop -= step;
       }
 
-      container.scrollTop = scrollTop;
+      container.scrollTo({
+        top: scrollTop,
+      behavior: 'smooth'
+      });
 
       if (scrollTop >= scrollHeight - container.offsetHeight || scrollTop <= 0) {
         clearInterval(intervalId);
         intervalId = null;
       }
-
-      setFade(scrollTop);
+      
+      if (scrollTop % 200 === 0) {
+        if (amount > 0) {
+        var windowHeight = scrollHeight - container.offsetHeight;
+          console.log(scrollTop, windowHeight, container.offsetHeight+ "1h")
+          if (scrollTop == windowHeight ) {
+            latestCounter = latestCounter + 2;  
+          }
+            latestCounter = latestCounter + 2;
+          ScrollLatest(scrollTop);
+          prevCounter = 0;
+        } else if (amount < 0) {
+          
+          if (scrollTop <= 0) {
+            prevCounter = DivContainer.getElementsByTagName('div').length - 6;
+          } else{
+            
+            prevCounter = prevCounter + 2;
+          }
+          ScrollPrev(scrollTop);
+          latestCounter = 0;
+        }
+      }
     }, duration);
   }
 
-  function setFade(scrollTop) {
-    var prompts = document.querySelectorAll('.user-prompt, .ai-prompt');
-    
-    
-    for (var i = 0; i < prompts.length; i++) {
-      var prompt = prompts[i];
-      var promptTop = prompt.offsetTop;
-      
-      if (scrollTop >= promptTop && scrollTop < promptTop + prompt.offsetHeight) {
-        prompt.style.opacity = 0.5; 
-      } else {
-        if (prompt.classList.contains('prompt-200')) {
-          prompt.style.opacity = 1; 
-        } else if (prompt.classList.contains('form-400')) {
-          prompt.style.opacity = 1; 
-        } else if (prompt.classList.contains('table-600')) {
-          prompt.style.opacity = 1; 
-        }else if (prompt.classList.contains('user-prompt')) {
-          prompt.style.opacity = 1; 
-        }
-      }
-    }
-  }
+  var latestCounter = 0;
+  var prevCounter = 0;
+  var tablePrevCounter = 0;
+  var tableLatestCounter = 0;
+  var formPrevCounter = 0;
+  var formLatestCounter = 0;
+
   
+  function ScrollLatest(scrollTop) {
+    let fadedLatest = document.querySelectorAll(`.ai-prompt:nth-child(${latestCounter + 2 }), .user-prompt:nth-child(${latestCounter + 1})`);
+    fadedLatest.forEach((element) => {
+      /* console.log(element); */
+      /* console.log(element); */
+      if(element.classList.contains("form-400")){
+        latestCounter = latestCounter - 2;
+        formLatestCounter ++;
+        if(formLatestCounter == 2){
+          latestCounter = latestCounter + 2;
+          formLatestCounter = 0;
+        }
+      }else if (element.classList.contains("table-600")){
+        latestCounter = latestCounter - 2;
+        tableLatestCounter ++;
+        console.log(latestCounter);
+        if(tableLatestCounter == 4){
+          
+          latestCounter = latestCounter + 2;
+          tableLatestCounter = 0;
+        }
+
+        console.log("table", tableLatestCounter);
+      }
+      
+      element.classList.add('fade');
+    });
+    console.log('Scrolling down:', scrollTop);
+  }
+
+
+  function ScrollPrev(scrollTop) {
+   
+    var promptCount = DivContainer.querySelectorAll('.user-prompt, .ai-prompt').length;
+    let fadedPrev = document.querySelectorAll(`.ai-prompt:nth-child(${promptCount - prevCounter}), .user-prompt:nth-child(${promptCount - prevCounter - 1})`);
+    
+    fadedPrev.forEach((element) => {
+      /* console.log(element); */
+      if(element.classList.contains("form-400")){
+        prevCounter = prevCounter - 2;
+        formPrevCounter ++;
+        if(formPrevCounter == 2){
+          prevCounter = prevCounter + 2;
+          formPrevCounter = 0;
+        }
+      }else if (element.classList.contains("table-600")){
+        prevCounter = prevCounter - 2;
+        tablePrevCounter ++;
+        console.log(prevCounter);
+        if(tablePrevCounter == 4){
+          
+        prevCounter = prevCounter + 2;
+        tablePrevCounter = 0;
+        }
+
+        console.log("table", tablePrevCounter);
+      }
+      
+      element.classList.add('fade');
+    });
+
+    console.log('Scrolling up:', scrollTop);
+  }
 
   var hoverLatest = document.getElementById('latest');
-hoverLatest.addEventListener('mouseenter', function() {
-  amount = 10;
+  hoverLatest.addEventListener('mouseenter', function() {
+    amount = 10;
 
-  if (!intervalId) {
-    removeClasses();
-    /* let fadedLatest = document.querySelectorAll(`.ai-prompt:nth-child(${latestCounter + 2 }), .user-prompt:nth-child(${latestCounter + 1})`);
-    fadedLatest.forEach((element) => {
-    console.log(element);
-    element.classList.add('fade');
-    }); */
-    scroll();
-  }
- 
-});
-
-hoverLatest.addEventListener('mouseleave', function() {
-  amount = 0;
-  clearInterval(intervalId);
-  intervalId = null;
-});
-
-var hoverPrev = document.getElementById('prev');
-hoverPrev.addEventListener('mouseenter', function() {
-  amount = -10;
+    if (!intervalId) {
+      removeClasses();
+      let fadedLatest = document.querySelectorAll(`.ai-prompt:nth-child(${latestCounter + 2 }), .user-prompt:nth-child(${latestCounter + 1})`);
+      fadedLatest.forEach((element) => {
+      /* console.log(element); */
+      element.classList.add('fade');
+    });
+      scroll();
+    }
   
-  if (!intervalId) {
-    removeClasses();
-    scroll();
-  }
-});
+  });
 
-hoverPrev.addEventListener('mouseleave', function() {
-  amount = 0;
-  clearInterval(intervalId);
-  intervalId = null;
-});
+  hoverLatest.addEventListener('mouseleave', function() {
+    amount = 0;
+    clearInterval(intervalId);
+    intervalId = null;
+  });
+
+  var hoverPrev = document.getElementById('prev');
+  hoverPrev.addEventListener('mouseenter', function() {
+    amount = -10;
+    if (!intervalId) {
+      removeClasses();
+      var promptCount = DivContainer.querySelectorAll('.user-prompt, .ai-prompt').length;
+      let fadedPrev = document.querySelectorAll(`.ai-prompt:nth-child(${promptCount - prevCounter}), .user-prompt:nth-child(${promptCount - prevCounter - 1})`);
+      fadedPrev.forEach((element) => {
+        /* console.log(element); */
+        element.classList.add('fade');
+      });
+      scroll();
+    }
+  });
+
+  hoverPrev.addEventListener('mouseleave', function() {
+    amount = 0;
+    clearInterval(intervalId);
+    intervalId = null;
+  });
 
 
 //Responsive grab scroll
