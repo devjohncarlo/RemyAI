@@ -231,11 +231,11 @@ function readPrompt() {
     let aiCursor = document.createElement("span");
     aiCursor.setAttribute('id', 'cursor');
     aiCursor.textContent = "|";
-
     aiNameContainer.classList.add("ainame-cont" );
     aiMsg.classList.add("ai-msg" );
     aiMsg.setAttribute('id', 'ai-msg');
-    aiPrompt.classList.add("ai-prompt", "table-600");
+    aiPrompt.classList.add("ai-prompt", "size-600");
+    userPrompt.classList.add("size-600");
     tbl.classList.add('tbl-container');
     tbl.setAttribute("border", "2");
     DivContainer.append(aiPrompt);
@@ -257,8 +257,8 @@ function readPrompt() {
     let text = document.querySelector("#ai-msg");
     let cursor = document.querySelector("#cursor");
     gsap.fromTo(cursor, {autoAlpha: 0, x: 2}, {autoAlpha: 1, duration: 0.5, repeat: -1, ease: SteppedEase.config(1)});
-    userInputDisabled.disabled = true;
-    buttonDisabled.disabled = true;
+    /* userInputDisabled.disabled = true;
+    buttonDisabled.disabled = true; */
     let tween = gsap.to("#ai-msg", {
       text: {
         value: "Hi, Here's a table that shows your property:"
@@ -291,31 +291,41 @@ function readPrompt() {
     const fieldContainer = document.createElement('div');
     const textField = document.createElement('input');
     const emailField = document.createElement('input');
-    const numberField = document.createElement('input');
+    const fileField = document.createElement('input');
     const buttonForms = document.createElement('button');
-    
+    const labelText = document.createElement('label');
+    const labelEmail = document.createElement('label');
+    const labelFile = document.createElement('label');
+
     textField.type = 'text';
-    textField.placeholder = 'Enter text';
+    textField.placeholder = 'Enter Username';
     emailField.type = 'email';
     emailField.placeholder = 'Enter email';
-    numberField.type = 'number';
-    numberField.placeholder = 'Enter number';
+    fileField.type = 'file';
+    fileField.placeholder = 'Upload a File';
     buttonForms.type = "submit";
     buttonForms.textContent = "Submit"
+    labelText.textContent = "Username";
+    labelEmail.textContent = "Email Address";
+    labelFile.textContent = "File Upload";
     aiCursor.setAttribute('id', 'cursor');
     aiCursor.textContent = "|";
 
     aiNameContainer.classList.add("ainame-cont" );
     aiMsg.classList.add("ai-msg");
-    aiPrompt.classList.add("ai-prompt", "form-400");
+    aiPrompt.classList.add("ai-prompt", "size-600");
+    userPrompt.classList.add("size-600");
     fieldContainer.classList.add("form-container", "inputForms-container");
     textField.classList.add("form-control");
     emailField.classList.add("form-control");
-    numberField.classList.add("form-control");
+    fileField.classList.add("form-control");
     buttonForms.classList.add("btn", "btn-primary");
+    labelText.setAttribute = "id", "username";
+    labelEmail.setAttribute = "id", "email";
+    labelFile.setAttribute = "id", "file";
 
     DivContainer.append(aiPrompt);
-    fieldContainer.append(textField,emailField,numberField, buttonForms);
+    fieldContainer.append(labelText, textField, labelEmail, emailField, labelFile, fileField, buttonForms);
     aiPrompt.append(aiNameContainer, aiMsg);
     aiNameContainer.textContent = aiName;
     
@@ -380,7 +390,10 @@ function readPrompt() {
     
   // Append the input fields to the field container
   
-  
+  prevCounter = 0;
+  tablePrevCounter = 0;
+  latestCounter = 0;
+  tableLatestCounter = 0;
   }
   var tableAndFormsCounter = 0;
   repositionWindow = document.getElementById("prompt-msg");
@@ -395,14 +408,18 @@ function readPrompt() {
     buttonSubmit.setAttribute("disabled", true);
   }
   
-  if(isForms.length == 1 && allMsg > 0 || isForms.length > 1){
+  console.log(repositionWindow.scrollTop);
+  console.log(repositionWindow.offsetHeight);
+  console.log(repositionWindow.scrollHeight);
+
+  if(repositionWindow.scrollHeight > 700){
     displayScroll()
   }
+
   if(allMsg == 6 ){
     removeClasses();
     setClasses();
   }else if(allMsg >= 8 && allMsg < 10){
-    displayScroll()
     removeClasses();
     setClasses();
   }

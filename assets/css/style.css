@@ -342,7 +342,8 @@ tr:first-child {
 }
 .inputForms-container{
   width: 100%;
-  height: 200px;
+  /* height: 200px; */
+  padding: 48px 0 30px;
 }
 .tbl-container, .inputForms-container{
   opacity: 0;
@@ -358,6 +359,10 @@ tr:first-child {
   border: 1px solid;
 }
 
-.table-600{
+.size-600{
 height: 600px !important;
+}
+
+.inputForms-container .btn{
+  margin-top: 15px;
 }

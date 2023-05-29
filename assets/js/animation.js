@@ -21,7 +21,7 @@ function hideGreetings(){
 
   function scroll() {
     var container = document.getElementById('prompt-msg');
-    var step = 10;
+    var step = 20;
     var duration = 50 ;
 
     intervalId = setInterval(function() {
@@ -46,96 +46,112 @@ function hideGreetings(){
       
       if (scrollTop % 200 === 0) {
         if (amount > 0) {
-        var windowHeight = scrollHeight - container.offsetHeight;
-          console.log(scrollTop, windowHeight, container.offsetHeight+ "1h")
-          if (scrollTop == windowHeight ) {
+          var windowHeight = scrollHeight - container.offsetHeight;
+          console.log(scrollTop, windowHeight, container.offsetHeight+ "1h");
+          let fadedLatestFirst = document.querySelector(`.user-prompt:first-child`);
+          let fadedLatestAi = document.querySelector(`.ai-prompt:nth-child(${latestCounter + 2 })`);
+          console.log(fadedLatestFirst);
+          console.log(fadedLatestAi);
+          if(fadedLatestFirst.classList.contains("size-600") && fadedLatestAi == fadedLatestFirst){
+            tableLatestCounter ++;
+            console.log("sheesh");
+            if (tableLatestCounter == 3) {
+              latestCounter = latestCounter + 2;
+              tableLatestCounter = 0;
+              console.log("success");
+            } 
+          }else{
+            if (scrollTop == windowHeight) {
+              /* latestCounter = latestCounter + 2;   */
+            } else{
+              console.log(fadedLatestAi);
+              if(fadedLatestAi.classList.contains("size-600")){
+                tableLatestCounter ++;
+                console.log("2nd sheesh")
+                if(tableLatestCounter == 3){
+                  latestCounter = latestCounter + 2;
+                  tableLatestCounter = 0;
+                  console.log("2nd success");
+                }
+              }else{
+                latestCounter = latestCounter + 2;
+              }
+            }
+          }
+
+          /* if (scrollTop == windowHeight ) {
             latestCounter = latestCounter + 2;  
           }
-            latestCounter = latestCounter + 2;
-          ScrollLatest(scrollTop);
+            latestCounter = latestCounter + 2; */
+          FadeOnScrollLatest(scrollTop);
           prevCounter = 0;
+          tablePrevCounter = 0;
         } else if (amount < 0) {
-          
-          if (scrollTop <= 0) {
-            prevCounter = DivContainer.getElementsByTagName('div').length - 6;
-          } else{
-            
-            prevCounter = prevCounter + 2;
+          var promptCount = DivContainer.querySelectorAll('.user-prompt, .ai-prompt').length;
+          let fadedPrevLast = document.querySelector(`.ai-prompt:last-child`);
+          let fadedPrevAi = document.querySelector(`.ai-prompt:nth-child(${promptCount - prevCounter})`);
+
+          if(fadedPrevLast.classList.contains("size-600") && fadedPrevAi == fadedPrevLast){
+            tablePrevCounter ++;
+            console.log("sheesh");
+            if (tablePrevCounter == 3) {
+              prevCounter = prevCounter + 2;
+              tablePrevCounter = 0;
+              console.log("success");
+            } 
+          }else{
+            if (scrollTop <= 0) {
+              prevCounter = DivContainer.getElementsByTagName('div').length - 6;
+            } else{
+              console.log(fadedPrevAi);
+              if(fadedPrevAi.classList.contains("size-600")){
+                tablePrevCounter ++;
+                console.log("2nd sheesh")
+                if(tablePrevCounter == 3){
+                  prevCounter = prevCounter + 2;
+                  tablePrevCounter = 0;
+                  console.log("2nd success");
+                }
+              }else{
+                prevCounter = prevCounter + 2;
+              }
+            }
           }
-          ScrollPrev(scrollTop);
+          FadeOnScrollPrev(scrollTop);
           latestCounter = 0;
+          tableLatestCounter = 0;
         }
       }
     }, duration);
   }
 
-  var latestCounter = 0;
-  var prevCounter = 0;
   var tablePrevCounter = 0;
   var tableLatestCounter = 0;
   var formPrevCounter = 0;
   var formLatestCounter = 0;
 
   
-  function ScrollLatest(scrollTop) {
+  function FadeOnScrollLatest(scrollTop) {
     let fadedLatest = document.querySelectorAll(`.ai-prompt:nth-child(${latestCounter + 2 }), .user-prompt:nth-child(${latestCounter + 1})`);
     fadedLatest.forEach((element) => {
-      /* console.log(element); */
-      /* console.log(element); */
-      if(element.classList.contains("form-400")){
-        latestCounter = latestCounter - 2;
-        formLatestCounter ++;
-        if(formLatestCounter == 2){
-          latestCounter = latestCounter + 2;
-          formLatestCounter = 0;
-        }
-      }else if (element.classList.contains("table-600")){
-        latestCounter = latestCounter - 2;
-        tableLatestCounter ++;
-        console.log(latestCounter);
-        if(tableLatestCounter == 4){
-          
-          latestCounter = latestCounter + 2;
-          tableLatestCounter = 0;
-        }
-
-        console.log("table", tableLatestCounter);
-      }
-      
-      element.classList.add('fade');
+      fadedLatest[0].classList.add("fade");
+      fadedLatest[1].classList.add("lightFade");
     });
     console.log('Scrolling down:', scrollTop);
   }
 
 
-  function ScrollPrev(scrollTop) {
+  function FadeOnScrollPrev(scrollTop) {
    
     var promptCount = DivContainer.querySelectorAll('.user-prompt, .ai-prompt').length;
     let fadedPrev = document.querySelectorAll(`.ai-prompt:nth-child(${promptCount - prevCounter}), .user-prompt:nth-child(${promptCount - prevCounter - 1})`);
     
     fadedPrev.forEach((element) => {
       /* console.log(element); */
-      if(element.classList.contains("form-400")){
-        prevCounter = prevCounter - 2;
-        formPrevCounter ++;
-        if(formPrevCounter == 2){
-          prevCounter = prevCounter + 2;
-          formPrevCounter = 0;
-        }
-      }else if (element.classList.contains("table-600")){
-        prevCounter = prevCounter - 2;
-        tablePrevCounter ++;
-        console.log(prevCounter);
-        if(tablePrevCounter == 4){
-          
-        prevCounter = prevCounter + 2;
-        tablePrevCounter = 0;
-        }
-
-        console.log("table", tablePrevCounter);
-      }
       
-      element.classList.add('fade');
+      
+      fadedPrev[0].classList.add("lightFade");
+      fadedPrev[1].classList.add("fade");
     });
 
     console.log('Scrolling up:', scrollTop);
@@ -150,7 +166,8 @@ function hideGreetings(){
       let fadedLatest = document.querySelectorAll(`.ai-prompt:nth-child(${latestCounter + 2 }), .user-prompt:nth-child(${latestCounter + 1})`);
       fadedLatest.forEach((element) => {
       /* console.log(element); */
-      element.classList.add('fade');
+      fadedLatest[0].classList.add("fade");
+      fadedLatest[1].classList.add("lightFade");
     });
       scroll();
     }
@@ -172,7 +189,8 @@ function hideGreetings(){
       let fadedPrev = document.querySelectorAll(`.ai-prompt:nth-child(${promptCount - prevCounter}), .user-prompt:nth-child(${promptCount - prevCounter - 1})`);
       fadedPrev.forEach((element) => {
         /* console.log(element); */
-        element.classList.add('fade');
+        fadedPrev[0].classList.add("lightFade");
+        fadedPrev[1].classList.add("fade");
       });
       scroll();
     }
