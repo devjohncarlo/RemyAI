@@ -6,34 +6,6 @@
 <?php include("head.php"); ?>
 <head>
 <style>
-.trivia { 
-    height: 60px; 
-    position: fixed; 
-    bottom:5%;
-    opacity: 1;
-    text-align:center;
-    /*padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;*/
-    /*margin: auto;*/
-    width: 100%;
-    /*background: #fff;*/
-    border-radius: 3px;
-    max-width: 100%;
-    /*background-color: #393838;*/
-    /*background-color: #0088cc;*/
-    color:white;
-}
-.trivia-p{
-    color:white;
-    font-size:20px;
-    margin-left: 250px;
-    margin-right: 250px;
-
-
-    text-shadow: 1px 1px 2px black, 0 0 25px white, 0 0 5px black;
-}
 
 
 </style>
@@ -69,6 +41,19 @@
                 </div>
             </div>
         </div>
+        <div class="nav-mobile">
+            <span>John Doe</span>
+            <div class="dropdown">
+                <a class="user-dropdown" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="images/menu.png" alt="menu-icon">
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#"> <img src="images/sub.png" alt="" height="18" width="18"> Subscription</a>
+                        <a class="dropdown-item" href="#"> <img src="images/support.png" alt="" height="18" width="18"> Support</a>
+                        <a class="dropdown-item" href="#"> <img src="images/logout.png" alt="" height="20" width="20"> Logout</a>
+                </div>
+            </div>
+        </div>
 
         <div class="prompt-container">
             <div class="greetings" id="greetings" >
@@ -76,7 +61,7 @@
             </div>
             <div class="form-container d-flex mb-3">
                 <div class="input-group" id="user-input-container" >
-                    <input type="text" id="user-input" class="form-control" maxlength="90" placeholder="Lorem ipsum dolor sit amet" required aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <input type="text" id="user-input" class="form-control" maxlength="90" placeholder="Pull up property overview of 123 Main" required aria-label="Recipient's username" aria-describedby="basic-addon2">
                     <div class="input-group-append">
                         <button onclick="readPrompt()" id="submit" disabled class="btn btn-outline-secondary" type="button"><img src="images/sent.png" alt="" height="22" width="22"></button>
                     </div>
@@ -95,8 +80,16 @@
                 </div>
             </div>
            
-            
+          
+            <div class="footer-mobile">
+                <span>© Remy AI | 2023</span> 
+            </div>
         </div>
+        
+    </div>
+    <div class="footer">
+        <span>© Remy AI | 2023</span> 
+    </div>
     <!-- <div class="login-area login-bg">
      
         <div  class="container">
@@ -129,6 +122,7 @@
         </div>
 
     </div> -->
+        
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/TextPlugin.min.js"></script>
 <script src="assets/js/particles.js"></script>

@@ -5,6 +5,7 @@
     -moz-box-sizing: border-box; 
     -webkit-box-sizing: border-box; 
      box-sizing: border-box; 
+     font-family: Calibri, sans-serif !important; 
 }
 div{
   -moz-box-sizing: border-box; 
@@ -112,10 +113,10 @@ canvas{
     
 .container {
     width: 100%;
-    height: 100vh;
+    height: calc(100vh - 30px);
     position: relative;
     z-index: 1;
-    padding: 3vh 10vw !important;
+    padding: 3vh 5vw !important;
 }
 
 .login-bg {
@@ -140,7 +141,9 @@ canvas{
   text-decoration: none;
   cursor: pointer;
 }
-
+.nav-mobile{
+  display: none;
+}
 .user-dropdown{
   color: white !important;
 }
@@ -179,6 +182,8 @@ flex-direction: column;
 justify-content: center;
   
 width: 100%;
+  
+padding: 0 5vw;
 }
 
 .greetings{
@@ -221,6 +226,7 @@ width: 100%;
 .user-prompt{
   max-height: 100px;
   height: 100px !important;
+  background: none;
 }
 .user-prompt .username-cont, .ai-prompt .ainame-cont{
   font-size: 25px;
@@ -331,7 +337,7 @@ tr:first-child {
   position: relative;
   z-index: 0;
   /* display: flex; */
-  width: 96%;
+  width: 100%;
   margin-top: 50px;
   /* align-items: center; */
   /* justify-content: center; */
@@ -359,10 +365,24 @@ tr:first-child {
   border: 1px solid;
 }
 
-.size-600{
-height: 600px !important;
-}
+.size-600{/* height: 600px !important; */}
 
 .inputForms-container .btn{
   margin-top: 15px;
+}
+
+.footer{
+  display: flex;
+  justify-content: center;
+  /* margin: 50px 0; */
+  position: absolute;
+  bottom: 0;
+  left: 43vw;
+}
+.footer span{
+  color: #fff;
+  font-size: 20px;
+}
+.footer-mobile{
+  display: none;
 }

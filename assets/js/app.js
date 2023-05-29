@@ -104,8 +104,8 @@ function readPrompt() {
     let text = document.querySelector("#ai-msg");
     let cursor = document.querySelector("#cursor");
     gsap.fromTo(cursor, {autoAlpha: 0, x: 2}, {autoAlpha: 1, duration: 0.5, repeat: -1, ease: SteppedEase.config(1)});
-    /* userInputDisabled.disabled = true;
-    buttonDisabled.disabled = true; */
+    userInputDisabled.disabled = true;
+    buttonDisabled.disabled = true;
     let tween = gsap.to("#ai-msg", {
       text: {
         value: "Hello there! How can I assist you?"
@@ -117,7 +117,7 @@ function readPrompt() {
       onUpdate: () => text.appendChild(cursor),
       
     });
-
+    // controls for Typewriting
     /* document.querySelector('#restart').onclick = () => tween.restart() */
     /* document.querySelector('#pause').onclick = () => tween.pause()
     document.querySelector('#resume').onclick = () => tween.resume() */
@@ -257,8 +257,8 @@ function readPrompt() {
     let text = document.querySelector("#ai-msg");
     let cursor = document.querySelector("#cursor");
     gsap.fromTo(cursor, {autoAlpha: 0, x: 2}, {autoAlpha: 1, duration: 0.5, repeat: -1, ease: SteppedEase.config(1)});
-    /* userInputDisabled.disabled = true;
-    buttonDisabled.disabled = true; */
+    userInputDisabled.disabled = true;
+    buttonDisabled.disabled = true;
     let tween = gsap.to("#ai-msg", {
       text: {
         value: "Hi, Here's a table that shows your property:"
